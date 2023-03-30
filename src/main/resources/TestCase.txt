@@ -1,0 +1,20 @@
+ID:	A1
+Author:	Хамбиков Дмитрий
+Summary:	Создание клиента
+Preconditions:	Пользователь находится странице https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager
+Steps:	1) Нажать кнопку "Add Customer" 2) Ввести в поле "First Name" значение Tom 3) Ввести в поле "Last Name" значение Riddle 4) Ввести в поле "Post Code" значение E173RU 4) Нажать кнопку  "Add Customer" под полем "Post Code"
+Expected Result:	Отображается всплывающее сообщение с текстом "Customer added successfully with customer id :6"
+	
+ID:	A2
+Author:	Хамбиков Дмитрий
+Summary:	Сортировка клиентов по имени (First Name)
+Preconditions:	Пользователь находится странице https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager
+Steps:	1) Нажать кнопку "Customers" 2) Нажать на фильт "First Name" 3) Нажать на фильт "First Name" повторно
+Expected Result:	На шаге 2 список отсартирован от Z до A, на шаге 3 список отсартирован от A до Z,
+	
+ID:	A3
+Author:	Хамбиков Дмитрий
+Summary:	Поиск клиента по имени (First Name)
+Preconditions:	Пользователь находится странице https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager
+Steps:	1) Нажать кнопку "Customers" 2) Ввести в поле "Search Customer" значение Harry
+Expected Result:	Отображается список с именами Harry
