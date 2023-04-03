@@ -1,9 +1,14 @@
 package tests;
 
+import com.google.common.collect.Lists;
 import org.junit.jupiter.api.*;
 import utils.DriverWrapper;
-import globalsqa.AddCust;
-import globalsqa.ListCust;
+import globalsqa.CreatedCustomers;
+import globalsqa.ListCustomers;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class MainTest {
 
@@ -21,32 +26,46 @@ public class MainTest {
 
     @Test
     public void createCustomer() {
-        AddCust addCust = new AddCust(driverWrapper.getDriver());
-        addCust.openAddCustomer();
-        addCust.inputFirstName("Tom");
-        addCust.inputLastName("Riddle");
-        addCust.inputPostCode("E173RU");
-        addCust.addCustomer();
-        Assertions.assertEquals("Customer added successfully with customer id :6", addCust.checkAlertComplete());
-        addCust.acceptAlertComplete();
+        CreatedCustomers createdCustomers = new CreatedCustomers(driverWrapper.getDriver());
+        createdCustomers.openAddCustomer();
+        createdCustomers.inputFirstName("Tom");
+        createdCustomers.inputLastName("Riddle");
+        createdCustomers.inputPostCode("E173RU");
+        createdCustomers.addCustomer();
+        Assertions.assertEquals("Customer added successfully with customer id :6", driverWrapper.getDriver().switchTo().alert().getText());
+        driverWrapper.getDriver().switchTo().alert().accept();
     }
 
     @Test
-    public void sortCustomer() {
-        ListCust listCust = new ListCust(driverWrapper.getDriver());
-        listCust.openListCustomers();
-        listCust.SortFirstName();
-        Assertions.assertEquals("fa fa-caret-up", listCust.checkSortUp());
-        listCust.SortFirstName();
-        Assertions.assertEquals("fa fa-caret-down", listCust.checkSortDown());
+    public void sortCustomerUp() {
+        ListCustomers listCustomers = new ListCustomers(driverWrapper.getDriver());
+        listCustomers.openListCustomers();
+        List offSort = listCustomers.checkSortUp();
+        Collections.sort(offSort);
+        List<String> offSortReverse = Lists.reverse(offSort);
+        listCustomers.sortFirstName();
+        List onSort = listCustomers.checkSortUp();
+        Assertions.assertEquals(offSortReverse, onSort);
+    }
+
+    @Test
+    public void sortCustomerDown() {
+        ListCustomers listCustomers = new ListCustomers(driverWrapper.getDriver());
+        listCustomers.openListCustomers();
+        List offSort = listCustomers.checkSortUp();
+        Collections.sort(offSort);
+        listCustomers.sortFirstName();
+        listCustomers.sortFirstName();
+        List onSort = listCustomers.checkSortUp();
+        Assertions.assertEquals(offSort, onSort);
     }
 
     @Test
     public void searchCustomer() {
         String name = "Harry";
-        ListCust listCust = new ListCust(driverWrapper.getDriver());
-        listCust.openListCustomers();
-        listCust.searchNameCustomer(name);
-        Assertions.assertEquals(name, listCust.checkResultSearch());
+        ListCustomers listCustomers = new ListCustomers(driverWrapper.getDriver());
+        listCustomers.openListCustomers();
+        listCustomers.searchNameCustomer(name);
+        Assertions.assertEquals(name, listCustomers.getResultSearch());
     }
 }
